@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arena Duel</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗡️</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <!-- In-game HUD -->
+    <div id="hud" class="hidden">
+      <div id="tint"></div>
+      <div id="vignette"></div>
+      <div id="flash"></div>
+      <div id="scope"><div class="lens"></div></div>
+      <div id="crosshair" class="melee"><span></span><span></span><span></span><span></span><i></i></div>
+      <div id="hitmarker"></div>
+
+      <div id="top">
+        <div class="score">
+          <span class="you">YOU <b id="score-p">0</b></span>
+          <span class="round" id="round-label">ROUND 1</span>
+          <span class="them"><b id="score-a">0</b> AI</span>
+        </div>
+        <div class="enemy">
+          <div class="label"><span id="enemy-label">ENEMY</span><span id="enemy-weapon">Sword</span></div>
+          <div class="bar"><div id="enemy-hp"></div><div id="enemy-shield" class="shield"></div></div>
+          <div id="enemy-status" class="pills"></div>
+        </div>
+      </div>
+      <div id="feed"></div>
+      <div id="dmg-layer"></div>
+      <div id="practice-panel">
+        <div class="pp-title">PRACTICE RANGE</div>
+        <div id="pp-stats"></div>
+        <div class="pp-keys"><kbd>1</kbd>–<kbd>6</kbd> switch fighter · <kbd>Esc</kbd> pause / quit</div>
+      </div>
+
+      <div id="bottom-left">
+        <div class="label">HEALTH <b id="hp-text">100</b></div>
+        <div class="bar big"><div id="hp-fill"></div><div id="shield-fill" class="shield"></div></div>
+      </div>
+
+      <div id="bottom-center">
+        <div id="status" class="pills"></div>
+        <div id="abilities">
+          <div class="ab" data-slot="shift"><div class="cd"></div><div class="ico"></div><div class="num"></div><kbd>SHIFT</kbd><div class="nm"></div></div>
+          <div class="ab" data-slot="e"><div class="cd"></div><div class="ico"></div><div class="num"></div><kbd>E</kbd><div class="nm"></div></div>
+          <div class="ab ult" data-slot="q"><div class="cd"></div><div class="ico"></div><div class="num"></div><kbd>Q</kbd><div class="nm"></div></div>
+        </div>
+      </div>
+      <div id="bottom-right">
+        <div id="weapon-name">SWORD</div>
+        <div id="ammo"></div>
+      </div>
+
+      <div id="center"><div id="center-main"></div><div id="center-sub"></div></div>
+      <div id="lock-hint" class="hidden">Click to capture the mouse</div>
+      <div id="bot-dot"></div>
+    </div>
+
+    <!-- Main menu -->
+    <div id="menu" class="overlay">
+      <div class="panel menu-panel">
+        <header class="menu-head">
+          <h1>ARENA<span>DUEL</span></h1>
+          <p class="tag">1v1 · VS AI · First to 3 rounds</p>
+        </header>
+
+        <section>
+          <h2>Choose your fighter <small class="hint">← → to browse</small></h2>
+          <div id="roster" class="roster"></div>
+        </section>
+
+        <section id="fighter" class="fighter"></section>
+
+        <div class="row">
+          <div class="field">
+            <h2>Opponent</h2>
+            <div id="ai-weapon" class="opp"></div>
+          </div>
+          <div class="field">
+            <h2>Difficulty</h2>
+            <div id="difficulty" class="seg"></div>
+            <h2 class="sens-label">Mouse sensitivity <span id="sens-val">1.0</span></h2>
+            <input type="range" id="sens" min="0.2" max="6" step="0.1" value="1" />
+            <h2 class="sens-label">Aim assist <small class="hint">helps with TrackPoints &amp; touchpads</small></h2>
+            <div id="assist" class="seg"></div>
+          </div>
+        </div>
+
+        <div class="start-row">
+          <button id="start" class="btn primary">START MATCH</button>
+          <button id="practice" class="btn practice">🎯 PRACTICE RANGE</button>
+        </div>
+        <div class="controls">
+          <span><kbd>WASD</kbd> move</span>
+          <span><kbd>Space</kbd> jump (×2 sword)</span>
+          <span><kbd>LMB</kbd> / <kbd>F</kbd> attack</span>
+          <span><kbd>RMB</kbd> / <kbd>C</kbd> scope · alt fire</span>
+          <span><kbd>R</kbd> reload</span>
+          <span><kbd>Shift</kbd> <kbd>E</kbd> abilities</span>
+          <span><kbd>Q</kbd> ultimate</span>
+          <span><kbd>Esc</kbd> pause</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pause -->
+    <div id="pause" class="overlay hidden">
+      <div class="panel small">
+        <h1>PAUSED</h1>
+        <button id="resume" class="btn primary">RESUME</button>
+        <button id="quit" class="btn">QUIT TO MENU</button>
+      </div>
+    </div>
+
+    <!-- Match end -->
+    <div id="end" class="overlay hidden">
+      <div class="panel small">
+        <h1 id="end-title">VICTORY</h1>
+        <p id="end-sub" class="tag"></p>
+        <button id="rematch" class="btn primary">REMATCH</button>
+        <button id="to-menu" class="btn">MAIN MENU</button>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
